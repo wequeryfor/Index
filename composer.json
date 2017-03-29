@@ -1,0 +1,13 @@
+{
+    "require": {
+        "twig/twig": "^2.3",
+        "illuminate/database": "^5.4",
+        "phroute/phroute": "^2.1",
+        "nesbot/carbon": "^1.22"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"Wqf\\": "public/wqf"
+    	}
+    }
+}
