@@ -6,9 +6,3 @@
 	class Model extends Eloquent {
 		use \Illuminate\Database\Eloquent\SoftDeletes;
 	}
-
-	class AbstractModel extends Eloquent{
-		public function __construct($table){
-			$this->table = $table;
-		}
-	}

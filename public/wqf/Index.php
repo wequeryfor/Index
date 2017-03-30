@@ -42,10 +42,27 @@
 			# Reference
 			$this->file_ref = new FileRef([
 				'request' => [
-					'time' => Carbon::now()->toDateTimeString()
+					'time' => Carbon::now()->toDateTimeString(),
+					'tokken' => uniqid().rand(1, 100).uniqid().rand(1, 100).uniqid()
 				]
 			]);
 
+			$relation = new Relation;
+
+			$this->app();
+			$this->console();
+			
+			return Response::request($this->router);
+
+		}
+
+		public function app(){
+			require __DIR__."/../app/Route.php";
+		}
+
+		public function console(){
+			$console = new \Wqf\Console\Console;
+			require __DIR__."/Console/Route.php";
 		}
 
 	}

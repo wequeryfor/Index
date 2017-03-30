@@ -1,20 +1,23 @@
 <?php
 	namespace Wqf;
 	
-	class User extends Model {
-		protected $table = "console_user";
-		protected $hidden = ['password'];
-	}
-
-	class UserType extends Model {
-		protected $table = "console_user_type";
-	}
+	use Wqf\Model\User as User;
+	use Wqf\Model\UserType as UserType;
 
 	class Auth {
 
-		public $defaultUser;
-		public $defaultUserTypes;
-		public $sessionName = 'auth';
+		public $defaultUser = [
+			'name' => 'João',
+			'username' => 'joao',
+			'email' => 'joao@server.com',
+			'password' => 'maria',
+			'password_repeat' => 'maria',
+			'console_user_type_id' => 1
+		];
+
+		public $defaultUserTypes = ['admin', 'editor', 'reader'];
+
+		public $name = 'auth';
 
 		public function schema(){
 
@@ -45,11 +48,11 @@
 		public function session($user, $status = null){
 			$time = time() + (3600 * 3);
 			if($status == true){
-				setcookie($this->sessionName, $user, $time);
-				$_SESSION[$this->sessionName] = true;
+				setcookie($this->name, $user, $time);
+				$_SESSION[$this->name] = true;
 			} else {
-				$_SESSION[$this->sessionName] = null;
-				setcookie($this->sessionName, '', time()-3600);
+				$_SESSION[$this->name] = null;
+				setcookie($this->name, null, time()-3600);
 			}
 		}
 
@@ -72,7 +75,7 @@
 		}
 
 		public function check(){
-			return isset($_SESSION[$this->sessionName]) && isset($_COOKIE[$this->sessionName]) ? true : null;
+			return isset($_SESSION[$this->name]) && isset($_COOKIE[$this->name]) ? true : null;
 		}
 
 		public function register($data){
@@ -99,23 +102,11 @@
 			
 			# Init Schema
 			$this->schema();
-
-			# Default
-			$this->defaultUser = [
-				'name' => 'João',
-				'username' => 'joao',
-				'email' => 'joao@server.com',
-				'password' => 'maria',
-				'password_repeat' => 'maria',
-				'console_user_type_id' => 1
-			];
-
-			$this->defaultUserTypes = ['admin', 'editor', 'reader'];
 			
 			if($this->numberUsers() == 0){
 				
 				$this->register($this->defaultUser);
-				
+							
 				foreach($this->defaultUserTypes as $item){
 					$userType = new UserType;
 					$userType->name = $item;
