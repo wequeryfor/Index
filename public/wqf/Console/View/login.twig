@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-</head>
-<body>
-	
-	<title>{{ neto }}</title>
-</body>
-</html>
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title 'Login' %}
+{% block master %}
+	<div class="login-container">
+		<div class="login">
+			<div class="container">
+				<div class="col-sm-8 col-sm-offset-2">
+					<form action="{{ route('console/login') }}" method="POST" class="login-form">
+						<input type="text" style="display: none;">
+						<input type="password" style="display: none;">
+						<div class="login-form-header login-form-box">
+							<h2>
+								Login <span>{{ app.domain }}<strong>/console</strong></span>
+							</h2>
+						</div>
+						<div class="login-form-box">
+							<input name="username" type="text" placeholder="Usuário" class="console-field">
+						</div>
+						<div class="login-form-box">
+							<input name="password" type="password" placeholder="Senha" class="console-field">
+						</div>
+						<div class="login-form-box">
+							<button type="submit" class="console-button console-button-success">
+								<i class="ion-android-arrow-forward"></i>
+								<span>Entrar</span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

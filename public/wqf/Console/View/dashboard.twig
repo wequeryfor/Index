@@ -1,0 +1,35 @@
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title 'Dashboard' %}
+{% block master %}
+	
+	{% include 'header.twig' with { 'title': block('title') } %}
+
+	<div class="console-content console-content-dashboard">
+		<div class="container">
+			<div class="animals-rainbow animals-grid">
+				<div class="row">
+					{% for table in app.schema if table.container %}
+						<a href="{{ route('console/table/' ~ table.key ) }}" class="col-xs-6 col-sm-2 animal">
+							<div class="animal-body">
+								<span class="animal-icon">
+								</span>
+								<span class="animal-desc">
+									<span class="animal-desc-title">
+										<span class="title title-0">{{ table.desc.title_plural }}</span>
+									</span>
+									<span class="animal-desc-sub">
+										<span class="text-sub">
+											{% if table.type == 'blog' %} Blog {% endif %}
+										</span>
+									</span>
+								</span>
+							</div>
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

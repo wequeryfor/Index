@@ -1,7 +1,10 @@
 <?php return [
+
+	'template' => 'catedral',
 	
 	'database' => [
 		
+
 		/**
 			! Database configuration.
 			please check that data bellow is valid.

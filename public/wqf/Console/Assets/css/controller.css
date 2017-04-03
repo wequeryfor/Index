@@ -1,0 +1,19 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f1f1f1; }
+
+.title {
+  display: block; }
+
+.title-1 {
+  font-size: 18px; }
+
+.title-2 {
+  font-size: 21px;
+  color: #75bdda; }
+
+.text-sub {
+  font-size: 12px;
+  opacity: .6; }

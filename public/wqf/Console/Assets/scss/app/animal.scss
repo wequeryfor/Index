@@ -1,0 +1,98 @@
+.animal-icon {
+	background: $color-theme-1;
+	width: 55px;
+	height: 55px;
+	border-radius: 100%;
+	display: block;
+	text-align: center;
+	line-height: 55px;
+	font-size: 35px;
+	color: rgba(white, .8);
+}
+
+.animals-list {
+	padding: 15px;
+	@extend %box;
+	.animal {
+		@extend %words-in;
+		& + .animal {
+			margin-top: 15px;
+		}
+		&:before {
+			content: "";
+			width: 10px;
+			height: 10px;
+			background: inherit;
+			border-radius: 100%;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%) scale(0);
+			left: -2px;
+			@extend %motion;
+		}
+		&:hover{
+			&:before {
+				transform: translateY(-50%) scale(1);
+			}
+			.animal-desc-title {
+				color: black;
+			}
+		}
+	}
+	.animal-desc {
+		padding-left: 15px;	
+		> * {
+			display: block;
+		}
+	}
+	.animal-desc-title {
+		margin-bottom: 7px;
+		@extend %motion;
+	}
+	.animal-icon {
+		width: 50px;
+		height: 50px;
+		line-height: 48px;
+	}
+	@for $i from 1 through length($rainbow) {
+		> *:nth-child(#{$i}):hover {
+			&:before {
+				background: nth($rainbow, $i);
+			}
+		}
+	}
+}
+
+
+.animals-rainbow {
+
+	@for $i from 1 through length($rainbow) {
+		.animal:nth-child(#{$i})  .animal-icon {
+			background: nth($rainbow, $i);
+		}
+	}
+
+}
+
+
+
+.animals-grid {
+	text-align: center;
+	.animal-icon {
+		display: table;
+		margin: 0 auto 10px auto;
+		width: 65px;
+		height: 65px;
+		line-height: 65px;
+		font-size: 40px;
+	}
+	.animal-desc {
+		color: $color-text;
+	}
+	.animal-body {
+		background: white;
+		padding: 26px 15px;
+		border-bottom: 2px solid rgba(51, 51, 51, 0.14);
+		border-radius: 6px;
+	}
+}

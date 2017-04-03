@@ -11,11 +11,8 @@
 			'username' => 'joao',
 			'email' => 'joao@server.com',
 			'password' => 'maria',
-			'password_repeat' => 'maria',
-			'console_user_type_id' => 1
+			'password_repeat' => 'maria'
 		];
-
-		public $defaultUserTypes = ['admin', 'editor', 'reader'];
 
 		public $name = 'auth';
 
@@ -23,15 +20,11 @@
 
 			$schema = new Schema;
 			
-			$schema->create_table('console_user_type');
-			$schema->create_column('console_user_type', 'string', 'name', ['nulable'=>true]);
-
 			$schema->create_table('console_user');
 			$schema->create_column('console_user', 'string', 'name');
 			$schema->create_column('console_user', 'string', 'username', ['unique'=>true]);
 			$schema->create_column('console_user', 'string', 'email', ['unique'=>true]);
 			$schema->create_column('console_user', 'string', 'password');
-			$schema->create_column('console_user', 'integer', 'console_user_type_id');
 
 		}
 
@@ -61,6 +54,10 @@
 			return true;
 		}
 
+		public function info(){
+			return json_decode($_COOKIE[$this->name], true);
+		}
+
 		public function login($data){
 			
 			$user = new User;
@@ -86,12 +83,46 @@
 				$user->name = $data['name'];
 				$user->username = $data['username'];
 				$user->email = $data['email'];
-				$user->console_user_type_id = $data['console_user_type_id'];
 				$user->password = $this->password('hash', $data['password']);
 			}
 
+
 			$user->save();
 
+		}
+
+		public function update($id, $data){
+
+			
+			$user = new User;
+			$user = $user->where('id', $id)->first();
+			
+			foreach ($data as $key => $value) {
+				$user->$key = $value;
+			}
+
+			$this->session(null, null);
+			$this->session($user, true);
+
+			if($this->password('check', $data['password'], $user->password)){
+				$this->session($user, true);
+			}
+
+			$user->save();
+			
+		}
+
+		public function new_password($id, $old, $new){
+			
+			$user = new User;
+			$user = $user->where('id', $id)->first();
+			
+			if($this->password('check', $old, $user->password)){
+				$user->password = $this->password('hash', $new);
+			}
+
+			$user->save();
+			
 		}
 
 		public function numberUsers(){
@@ -101,17 +132,12 @@
 		public function __construct(){
 			
 			# Init Schema
-			$this->schema();
+			// $this->schema();
 			
 			if($this->numberUsers() == 0){
 				
 				$this->register($this->defaultUser);
 							
-				foreach($this->defaultUserTypes as $item){
-					$userType = new UserType;
-					$userType->name = $item;
-					$userType->save();
-				}
 
 			}
 

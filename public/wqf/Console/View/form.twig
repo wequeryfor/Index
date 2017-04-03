@@ -1,0 +1,68 @@
+{% macro input(name, type, class, value) %}
+	<input type="{{ type|default('text') }}" name="{{ name }}" class="laros-field laros-input {{ class }}"/>
+{% endmacro %}
+
+{% macro text(name, title, value) %}
+	{% import _self as forms %}
+    <div class="laros-field-container">
+    	<span class="laros-field-title">{{ title }}</span>
+    	{{ forms.input(name, 'text', 'laros-input-text laros-input-' ~ name) }}
+    </div>
+{% endmacro %}
+
+{% macro password(name, title, value) %}
+	{% import _self as forms %}
+	<div class="laros-field-container">
+    	<span class="laros-field-title">{{ title }}</span>
+    	{{ forms.input(name, 'password', 'laros-input-text laros-input-' ~ name) }}
+    </div>
+{% endmacro %}
+
+{% macro submit(text) %}
+	<div class="laros-field-container">
+		<button type="submit" class="laros-button laros-button-success">{{ text }}</button>
+	</div>
+{% endmacro %}
+
+{% macro textarea(text, title, value) %}
+	<div class="laros-field-container">
+		<span class="laros-field-title">{{ title }}</span>
+		<textarea class="laros-field laros-input-textarea" name="{{ name }}">{% if value %}{{ value}}{% endif %}</textarea>
+	</div>
+{% endmacro %}
+
+{% macro auth() %}
+	{% import _self as forms %}
+	<form action="" class="laros-fields">
+		
+		<input type="text" class="laros-out--app">
+		<input type="password" class="laros-out--app">
+		
+		<template v-if="count(error.login)">
+			<div class="laros-box laros-w-sb">
+				<template v-for="error in error.login">
+					{{ forms.alert('error', vue('error')) }}
+				</template>
+			</div>
+		</template>
+
+		{{ forms.text('username', 'Usuário') }}
+		{{ forms.password('password', 'Senha') }}
+		
+		<button type="submit" class="laros-button laros-button-block laros-button-success">Login</button>
+	</form>
+{% endmacro %}
+
+{% macro alert(type, msg) %}
+	<span class="laros-alert laros-alert-{{ type }}">{{ msg }}</span>
+{% endmacro %}
+
+{% macro radio(name, id) %}
+	<input type="radio" id="{{id|default(name)}}" name="{{name}}" class="laros-out--app">
+	<label class="laros-check laros-check--radius" for="{{id|default(name)}}"></label>
+{% endmacro %}
+
+{% macro checkbox(name) %}
+	<input type="checkbox" id="{{id|default(name)}}" name="{{name}}" class="laros-out--app">
+	<label class="laros-check laros-check--check" for="{{id|default(name)}}"></label>
+{% endmacro %}

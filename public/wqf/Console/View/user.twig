@@ -1,0 +1,68 @@
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title 'Minha conta' %}
+{% block master %}
+	{% set user = download('console_user', 'id = ' ~ app.user.id) %}
+	{% include 'header.twig' with { 'title': block('title') } %}
+
+	<div class="console-content console-content-table">
+		<div class="container">
+			<form action="{{ route('console/user-update/' ~ user.id ) }}" method="POST" class="console-box-form">
+				<div class="console-field-case">
+					<span class="console-field-title">Nome</span>
+					<input name="name" type="text" class="console-field" value="{{ user.name }}">
+				</div>
+				<div class="console-field-case">
+					<span class="console-field-title">E-mail</span>
+					<input name="email" type="text" class="console-field" value="{{ user.email }}">
+				</div>
+				<div class="console-field-case">
+					<button type="submit" class="console-button console-button-success">
+						<i class="ion-android-done"></i>
+						<span>Salvar mudanças</span>
+					</button>
+					<button onclick="showModal('.modal-inside'); return false;" class="console-button console-button-warning">
+						<i class="ion-android-lock"></i>
+						<span>Alterar senha</span>
+					</button>
+				</div>
+			</form>
+			<div class="add-user modal-inside">
+				<div class="title title-1 modal-title">Alterar senha</div>
+				<form action="{{ route('console/user-update-password/' ~ user.id) }}" method="POST" class="modal-form">
+					<div class="console-field-case">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="row">
+									<div class="col-sm-6">
+										<span class="console-field-title">Senha atual</span>
+										<input name="old_password" type="password" class="console-field">
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="row">
+									<div class="col-sm-6">
+										<span class="console-field-title">Nova senha</span>
+										<input name="new_password" type="password" class="console-field">
+									</div>
+									<div class="col-sm-6">
+										<span class="console-field-title">Nova senha</span>
+										<input name="new_password_repeat" type="password" class="console-field">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="console-field-case">
+						<button type="submit" class="console-button console-button-success">
+							<i class="ion-android-done"></i>
+							<span>Alterar senha</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

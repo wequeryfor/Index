@@ -1,0 +1,51 @@
+.laros-terminal {
+  background: white;
+  width: 100%;
+  border: 1px solid gainsboro;
+  border-radius: 6px;
+  overflow: hidden; }
+
+.laros-terminal-header {
+  border-bottom: 1px solid gainsboro;
+  background: #f9f9f9;
+  color: #1c3744;
+  width: 100%;
+  float: left;
+  padding: 5px 15px;
+  font-weight: bold;
+  position: relative; }
+
+.laros-terminal-header-corner {
+  position: absolute;
+  right: 15px;
+  margin: 5px 0; }
+
+.laros-terminal-header-corner > span + span {
+  margin-left: 5px; }
+
+.laros-terminal-header-corner > span {
+  width: 10px;
+  height: 10px;
+  background: #1c3744;
+  display: block;
+  border-radius: 100%;
+  opacity: .4;
+  float: left; }
+
+.laros-terminal-screen {
+  padding: 15px 20px;
+  float: left;
+  width: 100%;
+  height: calc(100% - 31px); }
+
+.laros-terminal-line:before {
+  content: "$";
+  margin-right: 4px;
+  font-weight: bold; }
+
+.laros-terminal-line > .laros-terminal-line-date {
+  opacity: 0.5; }
+
+.laros-terminal-line + .laros-terminal-line {
+  display: block;
+  margin-top: 5px; }

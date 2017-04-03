@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="{{ app.setting.lang }}">
+<head>
+	<meta charset="UTF-8">
+	<title>{{ block('title') }}</title>
+	<script src="{{ dir.assets }}/vendor/jquery-3.2.0.min.js"></script>
+	<script src="{{ dir.assets }}/vendor/vue.min.js"></script>
+	<link rel="stylesheet" href="{{ dir.assets }}/vendor/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="{{ dir.assets }}/vendor/flat-animal/style.css">
+	<link rel="stylesheet" href="{{ dir.assets }}/vendor/tingle/tingle.min.css">
+	<link rel="stylesheet" href="{{ dir.assets }}/css/app.css">
+	{% block head %}{% endblock %}
+</head>
+<body class="{% block scope %}{% endblock %}">
+	<main class="main" id="main">
+		<div class="main-content main-content-in">
+			{{ block('master') }}
+		</div>
+		<div class="main-content main-content-out">
+			<div class="category-menu bg-rainbow-list">
+				{% for key, table in app.schema if table.container %}
+				    <a href="{{ route('console/table/' ~ key ) }}" class="bg-rainbow-target">
+				    	<i class="bg-rainbow"></i>
+				    	<span>{{ table.desc.title_plural }}</span>
+				    </a>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+	<script type="text/javascript" src="{{ dir.assets }}/vendor/tingle/tingle.min.js"></script>
+	<script type="text/javascript" src="{{ dir.assets }}/js/when.js"></script>
+	<script type="text/javascript" src="{{ dir.assets }}/js/util.js"></script>
+	<script type="text/javascript" src="{{ dir.assets }}/js/app.js"></script>
+	{% block js %}{% endblock %}
+</body>
+</html>

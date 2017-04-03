@@ -1,0 +1,52 @@
+<header class="console-header">
+	<div class="console-header-part" iw-part="1">
+		<div class="container">
+			<span class="console-header-text">
+				<span>
+					<small>Bem vindo,</small> <span>{{ app.user.name }}</span>
+				</span>
+				<span>
+					<span class="console-header-menu">
+						<a href="{{ route('console') }}" class="">
+							<i class="ion-android-radio-button-on"></i>
+							<span>Dashboard</span>
+						</a>
+						<a href="{{ route('console/adjustments') }}" class="">
+							<i class="ion-android-options"></i>
+							<span>Ajustes</span>
+						</a>
+						<a href="{{ route('console/users') }}" class="">
+							<i class="ion-android-contacts"></i>
+							<span>Usuários</span>
+						</a>
+						<a></a>
+						<a href="{{ route('console/my-profile') }}" class="">
+							<i class="ion-android-contact"></i>
+							<span>Editar perfil</span>
+						</a>
+						<a href="{{ route('console/logout') }}" class="">
+							<i class="ion-android-exit"></i>
+							<span>Sair</span>
+						</a>
+					</span>
+				</span>
+			</span>
+		</div>
+	</div>
+	<div class="console-header-part" iw-part="2">
+		<div class="container">
+			<span class="console-header-text">
+				<span>
+					<span class="title title-2">{{ title }}</span>
+				</span>
+				<span>
+					{% if template != 'dashboard' %}
+						<span class="console-header-trigger" onclick="toggleMenuCanvas(event)">
+							<i class="ion-android-menu"></i>
+						</span>
+					{% endif %}
+				</span>
+			</span>
+		</div>
+	</div>
+</header>

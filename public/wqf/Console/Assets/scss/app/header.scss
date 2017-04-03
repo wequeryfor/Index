@@ -1,0 +1,109 @@
+.console-header {
+
+	margin-bottom: 30px;
+
+	&, a {
+		color: white;
+	}
+
+}
+
+
+.console-header-part {
+	
+	&[iw-part="1"]{
+		height: 40%;
+		padding-top: 12px;
+		padding-bottom: 15px;
+		background: $color-black-1;
+	}
+
+	&[iw-part="2"]{
+		background: $color-black-2;
+		height: 60%;
+		padding-top: 18px;
+		padding-bottom: 22px;
+	}
+
+}
+
+
+
+.console-header-text {
+	
+	@extend %tab-in;
+	
+	> *:last-child {
+		text-align: right;
+		> * {
+			text-align: initial;
+		}
+	}
+
+}
+
+.console-header-menu {
+	
+
+	@extend %words-in;
+	
+	a {
+		
+		display: inline-block;
+		position: relative;
+		top: -2px;
+		font-size: $size-text-read;
+
+		> *:first-child {
+			margin-right: 4px;
+		}
+
+	}
+
+	> * + *{
+		margin-left: 25px; 
+	}
+
+	> *:not([href]):before{
+		content: "|||";
+		letter-spacing: 2px;
+		opacity: .2;
+	}
+
+	a[href]{
+		&:hover, &:focus {
+			color: $color-theme-1;
+		}
+	}
+
+}
+
+.console-header-trigger {
+	font-size: 38px;
+    line-height: 1;
+    cursor: pointer;
+    position: relative;
+}
+
+.console-header-dropdown {
+	display: none;
+	position: absolute;
+    width: 250px;
+    border: 1px solid $color-border;
+    font-size: initial;
+    background: white;
+	right: 50px;
+	top: 10px;
+    z-index: 123;
+    border-radius: $size-corner;
+    box-shadow: $type-shadow-1;
+    a {
+    	color: initial;
+    }
+    padding: 20px 15px 15px 0; 
+    .animals-list {
+    	padding-top: 0;
+		max-height: 260px;
+		overflow-y: auto;
+    }
+}

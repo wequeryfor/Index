@@ -9,7 +9,7 @@
 
 		public $globals = [];
 		
-		public $dir = __DIR__."/../app/View";
+		public $dir = __DIR__."/../app/templates/".APP_TEMPLATE_NAME;
 
 		public function __construct($dir = null){
 			
@@ -21,9 +21,22 @@
 				(new \Twig_Loader_Filesystem($this->dir)), ['cache' => false]
 			);
 
+			$this->addGlobal('app', [
+				'user' => APP_CURRENT_USER,
+				'schema' => APP_SCHEMA,
+				'domain' => $_SERVER['HTTP_HOST'],
+				'setting' => [
+					'language' => 'pt-br'
+				]
+			]);
+
+			$this->addFunction('schema');
+			$this->addFunction('vue');
 			$this->addFunction('dump');
 			$this->addFunction('route');
 			$this->addFunction('download');
+			$this->addFunction('objkey');
+			$this->addFunction('getparam');
 
 		}
 
@@ -32,6 +45,8 @@
 			foreach($this->globals as $key => $value){
 				$this->twig->addGlobal($key, $value);
 			}
+
+			$this->twig->addGlobal('template', $view);
 
 			try {
 				echo $this->twig->render("{$view}.twig", $data);

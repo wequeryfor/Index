@@ -1,0 +1,92 @@
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title 'Usuários' %}
+{% block master %}
+	{% set users = download('console_user', 'all') %}
+	{% include 'header.twig' with { 'title': block('title') } %}
+
+	<div class="console-content console-content-table">
+		<div class="container">
+			<div class="console-table-header">
+				<div class="row">
+					<div class="col-xs-6 console-table-header-part">
+						<div class="console-search">
+							<i class="ion-ios-search-strong console-search-icon"></i>
+							<input type="text" placeholder="Pesquisar" class="console-field console-field-text">
+						</div>
+					</div>
+					<div class="col-xs-6 console-table-header-part">
+						<a onclick="showModal('.modal-inside')" class="console-button console-button-success">
+							<i class="ion-android-add-circle"></i>
+							<span>Adicionar</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<table class="console-table">
+				<thead>
+					<tr>
+						<td class="console-table-desc"><span class="text-1">{{ users|length }} Usuários</span></td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+					    <tr>
+							<td class="console-table-desc">
+								<span class="console-table-desc">
+									<a class="console-table-desc-icon console-table-icon">
+										<i class="ion-record"></i>
+									</a>
+									<span class="console-table-desc-text">
+										<a class="text-1">{{ user.name }}</a>
+										<span class="br text-sub">{{ user.email }}</span>
+									</span>
+								</span>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="add-user modal-inside">
+				<div class="title title-1 modal-title">Adicionar Usuário</div>
+				<form action="{{ route('console/user-register' ) }}" method="POST" class="modal-form">
+					<div class="console-field-case">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="console-field-title">Nome</span>
+								<input name="name" type="text" class="console-field">
+							</div>
+							<div class="col-sm-6">
+								<span class="console-field-title">Usuário</span>
+								<input name="username" type="text" class="console-field">
+							</div>
+						</div>
+					</div>
+					<div class="console-field-case">
+						<span class="console-field-title">Email</span>
+						<input name="email" type="text" class="console-field">
+					</div>
+					<div class="console-field-case">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="console-field-title">Senha</span>
+								<input name="password" type="password" class="console-field">
+							</div>
+							<div class="col-sm-6">
+								<span class="console-field-title">Repetir senha</span>
+								<input name="password_repeat" type="password" class="console-field">
+							</div>
+						</div>
+					</div>
+					<div class="console-field-case">
+						<button type="submit" class="console-button console-button-success">
+							<i class="ion-android-done"></i>
+							<span>Criar usuário</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

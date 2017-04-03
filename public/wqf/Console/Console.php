@@ -9,7 +9,9 @@
 			$view = new \Wqf\View(__DIR__.'/View');
 			
 			$view->globals = [
-				'neto' => 20
+				'dir' => [
+					'assets'=>'http://'.$_SERVER['HTTP_HOST'].'/Wqf/Console/Assets'
+				]
 			];
 
 			$view->render($file, $data);

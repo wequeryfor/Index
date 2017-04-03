@@ -8,39 +8,59 @@
 		public $form;
 		public $model;
 
-		public function __construct(){
+		public function layout(){
 
-			$dir = [
-				'form'=> __DIR__."/../app/Form/"
-			];
+			$this->form = require __DIR__."/../app/form.php";
 
-			foreach(scandir($dir['form']) as $item):
-				if($item != '.' && $item != '..'):
-					$column = str_replace('.php', '', $item);
-					$this->create_table($column);
-					$this->form[$column] = include $dir['form'].$item;
-				endif;
+			// Get forms config 
+			foreach($this->form as $key => $item):
+				$this->create_table($key);
+				if(array_key_exists('childs', $item)){
+					foreach($item['childs'] as $keyChild => $keyItem):
+						$this->form[$keyChild] = $keyItem;
+						$this->create_table($keyChild);
+					endforeach;
+				}
 			endforeach;
 
-			foreach($this->form as $keyForm => $form):
+			// Trate form
+			$newForm = [];
+			foreach ($this->form as $keyForm => $form):
 				
+				$itDesc = explode('|', $form['desc']);
+				$newForm[$keyForm]['desc'] = [];
+				$newForm[$keyForm]['desc']['title_plural'] = $itDesc[0];
+				$newForm[$keyForm]['desc']['title_singular'] = $itDesc[1];
+				
+				foreach($form['columns'] as $key => $column):		
+					$itConfig = explode('|', $column[0]);
+					$newForm[$keyForm]['columns'][$key]['title'] = $column[2];
+					$newForm[$keyForm]['columns'][$key]['type'] = $itConfig[0];
+					$newForm[$keyForm]['columns'][$key]['save_as'] = $itConfig[1];
+					$newForm[$keyForm]['columns'][$key]['required'] = is_numeric(strpos($column[1], '*')) ? true : null;
+				endforeach;
+				
+				$this->form[$keyForm]['key'] = strtolower($keyForm);
+				$this->form[$keyForm]['columns'] = $newForm[$keyForm]['columns'];
+				$this->form[$keyForm]['desc'] = $newForm[$keyForm]['desc'];
+
+			endforeach;
+
+			define('APP_SCHEMA', $this->form);
+
+			// Mout schema of columns
+			foreach($this->form as $keyForm => $form):
 				$form = (object) $form;
 				$columns = (object) $form->columns;
-				
 				foreach($columns as $keyColumn => $column):
-					
 					$rules = [];
-					
-					if(array_key_exists('required', $column)):
+					if($column['required']):
 						$rules['required'] = true;
 					endif;
-
 					$this->create_column($keyForm, $column['save_as'], $keyColumn, $rules);
-
 				endforeach;
-
 			endforeach;
-
+			
 		}
 		
 		public function create_table($name){
@@ -49,8 +69,6 @@
 					$table->increments('id');
 					$table->timestamps();
 					$table->softDeletes();
-					$table->integer('user_creator_id')->nullable();
-					$table->integer('user_editor_id')->nullable();
 				});
 			endif;
 		}

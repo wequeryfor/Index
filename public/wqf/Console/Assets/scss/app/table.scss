@@ -1,0 +1,77 @@
+.console-table {
+	
+	width: 100%;
+	background: white;
+	border-collapse: collapse;
+	border-radius: $size-corner;
+    overflow: hidden;
+	
+	$evenBg: rgba(236, 236, 236, 0.09);
+	
+	thead {
+		td {
+			padding: 7px 15px 9px 15px;
+			.text-1 {
+				font-size: 85%;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				opacity: .5;
+			}
+		}
+		tr {
+			background:$evenBg ;
+			border-bottom: 1px solid $color-border;
+		}
+	}
+	tbody {
+		td {
+			padding: 12px 15px 15px 15px;
+		}
+	}
+	tbody tr {
+		border-top: 1px solid $color-border;
+		border-bottom: 1px solid $color-border;
+	}
+}
+
+.console-table-desc {
+	width: 50%;
+	a {
+		color: $color-black-2;
+		&:hover { color: $color-black-1; }
+	}
+}
+
+.console-table-desc {
+	.console-table-desc-icon,
+	.console-table-desc-text {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.console-table-desc-text {
+		font-size: 18px;
+	}
+	.console-table-desc-icon {
+		font-size: 30px;
+		margin-right: 8px;
+	}
+}
+
+.console-table-actions {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.console-table-header {
+	margin-bottom: 15px;
+	.console-table-header-part:last-child {
+		text-align: right;
+	}
+}
+
+a.console-table-icon {
+	color: $color-theme-1-2;
+	&:hover {
+		color: $color-theme-1-2-a;
+	}
+}

@@ -1,0 +1,26 @@
+
+
+// MODAL
+.modal-inside {
+	display: none;
+}
+
+.tingle-modal-box__content {
+	padding: 30px;
+	@extend %box;	
+}
+
+.modal-title {
+	font-weight: bold;
+	margin-bottom: 15px;
+	margin-top: -8px;
+}
+
+.tingle-modal__close {
+	font-size: 55px;
+	padding-bottom: 11px;
+}
+
+.modal-form {
+	@extend %box;
+}

@@ -1,0 +1,73 @@
+.animals-list .animal {
+  font-size: 0; }
+  .animals-list .animal > * {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: initial; }
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f1f1f1; }
+
+.title {
+  display: block; }
+
+.title-1 {
+  font-size: 18px; }
+
+.title-2 {
+  font-size: 21px;
+  color: #75bdda; }
+
+.text-sub {
+  font-size: 12px;
+  opacity: .6; }
+
+.animal-icon {
+  background: #75bdda;
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+  display: block;
+  text-align: center;
+  line-height: 55px;
+  font-size: 35px;
+  color: rgba(255, 255, 255, 0.8); }
+
+.animals-list .animal-icon {
+  font-size: 35px; }
+
+.animals-list .animal-desc {
+  padding-left: 15px; }
+
+.animals-list > *:nth-child(1) > .animal-icon {
+  background: #63d1c0; }
+
+.animals-list > *:nth-child(2) > .animal-icon {
+  background: #76c24c; }
+
+.animals-list > *:nth-child(3) > .animal-icon {
+  background: #f3c24b; }
+
+.animals-list > *:nth-child(4) > .animal-icon {
+  background: #b83939; }
+
+.animals-list > *:nth-child(5) > .animal-icon {
+  background: #ea844c; }
+
+.animals-list > *:nth-child(6) > .animal-icon {
+  background: #5d4fa3; }
+
+.animals-list > *:nth-child(7) > .animal-icon {
+  background: #f3c24b; }
+
+.animals-list > *:nth-child(8) > .animal-icon {
+  background: #d6577e; }
+
+.animals-list > *:nth-child(9) > .animal-icon {
+  background: #63d1c0; }
+
+.animals-list > *:nth-child(10) > .animal-icon {
+  background: #87395a; }

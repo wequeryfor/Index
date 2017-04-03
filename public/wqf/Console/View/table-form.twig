@@ -1,0 +1,61 @@
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title 'Cadastrar ' ~ app.schema[slug].desc.title_singular %}
+{% block master %}
+	
+	{% include 'header.twig' with { 'title': block('title') } %}
+
+	<div class="console-content console-content-table">
+		<div class="container">
+			
+			{% set entrie = download(slug, 'id = ' ~ id) %}
+			
+			<form 
+				{% if entrie.id %}
+					action="{{ route('console/entrie-update/' ~ slug ~ '/' ~ entrie.id) }}"
+				{% else %}
+					action="{{ route('console/entrie-create/' ~ slug ) }}"
+				{% endif %}
+				method="post" class="console-box-form">
+			
+				{% for key, column in app.schema[slug].columns %}
+				    <div class="console-field-case">
+						<span class="console-field-title">{{ column.title }}</span>
+						{% if column.type == 'text' %}
+							<input {% if entrie.id %}value="{{objkey(key, entrie)}}"{% endif %} name="{{ key }}" type="text" class="{% if column.required %}required{% endif %} console-field">
+						{% elseif column.type == 'wysiwyg' %}
+							<textarea name="{{ key }}" class="console-field">{% if entrie.id %}{{objkey(key, entrie)}}{% endif %}</textarea>
+						{% endif %}
+					</div>
+				{% endfor %}
+				
+				
+				<div class="console-field-case">
+					{% if entrie.id %}
+						<div class="row">
+							<div class="col-sm-6">
+								<button type="submit" class="console-button console-button-success">
+									<i class="ion-android-done"></i>
+									<span>Atualizar {{ app.schema[slug].desc.title_singular }}</span>
+								</button>
+							</div>
+							<div class="col-sm-6 text-right">
+								<a href="{{ route('console/entrie-delete/' ~ slug ~ '/' ~ entrie.id) }}" class="console-button console-button-danger">
+									<i class="ion-android-done"></i>
+									<span>Deletar {{ app.schema[slug].desc.title_singular }}</span>
+								</a>
+							</div>
+						</div>
+					{% else %}
+						<button type="submit" class="console-button console-button-success">
+							<i class="ion-android-done"></i>
+							<span>Salvar {{ app.schema[slug].desc.title_singular }}</span>
+						</button>
+					{% endif %}
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

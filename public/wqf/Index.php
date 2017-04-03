@@ -14,15 +14,15 @@
 		public $request;
 		public $auth;
 		public $file_ref;
+		public $tokken;
 		
 		function __construct($config = '../config.php'){
 			
 			# Boot
 			session_start();
 			$this->request = (object) [];
-
-			# Get config
 			$this->config = include $config;
+			define('APP_TEMPLATE_NAME', $this->config['template']);
 
 			# Load Database
 			$capsule = new Db;
@@ -33,31 +33,27 @@
 			# Load Router
 			$this->router = new RouteCollector();
 
-			# Request Tokken
-			$this->request->tokken = uniqid();
-
 			# Auth
 			$this->auth = new Auth;
-			
-			# Reference
-			$this->file_ref = new FileRef([
-				'request' => [
-					'time' => Carbon::now()->toDateTimeString(),
-					'tokken' => uniqid().rand(1, 100).uniqid().rand(1, 100).uniqid()
-				]
-			]);
-
-			$relation = new Relation;
+			new Truck;
 
 			$this->app();
 			$this->console();
+			
+			define('APP_AUTH', $this->auth->check());
+
+			if(APP_AUTH){
+				define('APP_CURRENT_USER', $this->auth->info());
+			} else {
+				define('APP_CURRENT_USER', null);
+			}
 			
 			return Response::request($this->router);
 
 		}
 
 		public function app(){
-			require __DIR__."/../app/Route.php";
+			require __DIR__."/../app/route.php";
 		}
 
 		public function console(){

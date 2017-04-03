@@ -1,0 +1,119 @@
+{% extends 'template.twig' %}
+{% import 'form.twig' as forms %}
+{% block title app.schema[slug].desc.title_plural %}
+{% block master %}
+	
+	{% set entries = download(slug, 'all') %}
+
+	{% include 'header.twig' with { 'title': block('title') } %}
+
+	<div class="console-content console-content-table">
+		<div class="container">
+			{% if entries|length %}
+				<div class="console-table-header">
+					<div class="row">
+						<div class="col-xs-6 console-table-header-part">
+							<div class="console-search">
+								<i class="ion-ios-search-strong console-search-icon"></i>
+								<input type="text" placeholder="Pesquisar" class="console-field console-field-text" onkeyup="searchBellow($(this))">
+							</div>
+						</div>
+						<div class="col-xs-6 console-table-header-part">
+							<a href="{{ route('console/table/' ~ slug ~  '/new') }}" class="console-button console-button-success">
+								<i class="ion-android-add-circle"></i>
+								<span>Adicionar</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<table class="console-table">
+					<thead>
+						{% if getparam('response_send_msg') %}
+							<tr>
+								<td colspan="4">
+									{% if getparam('item_was_updated') %}
+										<div class="table-msg table-msg--success">
+											<i class="ion-android-radio-button-off"></i>
+											<span>{{ app.schema[slug].desc.title_singular }} atualizado com sucesso!</span>
+										</div>
+									{% endif %}
+									{% if getparam('item_was_created') %}
+										<div class="table-msg table-msg--success">
+											<i class="ion-android-radio-button-off"></i>
+											<span>{{ app.schema[slug].desc.title_singular }} cadastrado com sucesso!</span>
+										</div>
+									{% endif %}
+									{% if getparam('item_was_deleted') %}
+										<div class="table-msg table-msg--error">
+											<i class="ion-android-radio-button-off"></i>
+											<span>{{ app.schema[slug].desc.title_singular }} deletado com sucesso!</span>
+										</div>
+									{% endif %}
+								</td>
+							</tr>
+						{% endif %}
+						<tr>
+							<td class="console-table-desc"><span class="text-1">Descrição</span></td>
+							<td><span class="text-1">Usuário</span></td>
+							<td><span class="text-1">Data/Hora</span></td>
+							<td class="console-table-actions"><span class="text-1">Ações</span></td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for entrie in entries %}
+						    <tr>
+								<td class="console-table-desc">
+									<span class="console-table-desc">
+										<a href="{{ route('console/table/' ~ slug ~ '/' ~ entrie.id) }}" class="console-table-desc-icon console-table-icon">
+											<i class="ion-record"></i>
+										</a>
+										<span class="console-table-desc-text">
+											<a href="{{ route('console/table/' ~ slug ~ '/' ~ entrie.id) }}" class="text-1">
+												{{ objkey(app.schema[slug].head.main, entrie) }}
+											</a>
+											<span class="br text-sub">
+												{% for each in app.schema[slug].head.desc %}
+												    {{ objkey(each, entrie) }}
+												{% endfor %}
+											</span>
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="text">Francisco</span>
+								</td>
+								<td>
+									<span class="text">{{ entrie.created_at }}</span>
+								</td>
+								<td class="console-table-actions">
+									<a href="{{ route('console/entrie-delete/' ~ slug ~ '/' ~ entrie.id) }}" class="console-button-small console-button-pointer console-button console-button-danger">
+										<i class="ion-android-cancel"></i>
+									</a>
+									<a href="{{ route('console/table/' ~ slug ~ '/' ~ entrie.id) }}" class="console-button-pointer console-button-small console-button">
+										<i class="ion-android-create"></i>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<span>
+					<div class="msg-to--user">
+						<div class="msg-to--user-content">
+							<i class="flat-animal-6"></i>
+							<span>Nenhum {{ app.schema[slug].desc.title_singular }} encontrado!</span>
+						</div>
+						<div class="msg-to--user-footer">
+							<a href="{{ route('console/table/' ~ slug ~  '/new') }}" class="console-button console-button-success">
+								<i class="ion-android-add-circle"></i>
+								<span>Adicionar {{ app.schema[slug].desc.title_singular }}</span>
+							</a>
+						</div>
+					</div>
+				</span>
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
